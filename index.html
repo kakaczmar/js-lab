@@ -1,36 +1,189 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>JS Lab</title>
+    <title>JS-Lab</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
+            margin: 20;
+            padding: 10;
             font-family: Arial, serif;
         }
 
         h1 {
-            color: #0B3954;
+            color: yellow;
+            text-align: center;
+            background-color:grey;
         }
+        
+        ol {
+            color: yellow;
+            text-align: left;
+            background-color:grey;
+			font: bold 1.2em/20px "Arial", sans-serif;            
+        }
+		#startGame{
+            border-radius: 50%;
+			height: 100px;
+			width: 100px;
+            margin: 10;
+			background: green;
+
+			text-align: center;
+			font: bold 1.2em/20px "Arial", sans-serif;
+			} 
+		#stopGame{
+            border-radius: 50%;
+			height: 100px;
+			width: 100px;
+            margin: 10;
+			background: red;
+
+			text-align: center;
+			font: bold 1.2em/20px "Arial", sans-serif;
+			} 
+            
+		#buttonGame{
+			margin: 30;
+		   	height: 400px;
+			width: 400px;
+			background: white;
+            border-radius: 50%;
+			text-align: center;
+
+			font: bold 1.5em/250px "Arial", sans-serif;
+			}            
+		#div1 {
+			width: 650px;
+			height: 150px;
+			padding: 20px;
+			border: 2px solid #aaaaaa;
+			}        
+            .blue {
+            color: blue;
+            }
     </style>
 </head>
 <body>
 <div id="app">
-    <h1 id="main-header">Moja aplikacja</h1>
-    <p>To będzie gra. A oto co muszę zrobić:</p>
+    <h1 id="main-header">Gra Refleksomierzacz</h1>
     <ol>
-        <li class="boring">Nauczyć się HTML</li>
-        <li class="boring">Nauczyć się CSS</li>
-        <li>Nauczyć się JS</li>
-        <li id="super-important">Zaimplementować</li>
+        <p>Instrukcja obsługi gry:</p>
+        <li class="instruction">Aby rozpocząć greę naciśnij przycisk 'Start'.</li>
+        <li class="instruction">Jak zmieni się kolor tła, kliknij w obszar najszybciej jak potrafisz</li>
+        <li class="instruction">Powtórz czynność 5 razy.</li>
+        <li class="instruction">Jeśli chcesz zakończyć grę wcześniej kliknij 'Stop'.</li>
     </ol>
-</div>
+	<button id="startGame" type="button" onclick="startGame()">Start</button>
+	<button id="stopGame" type="button" onclick="stopGame()">Stop</button>
+
+	<div 
+	<button id="buttonGame" type="button" GameSpace> </button>
+	</div>
+	<div>
+	<h2 id="second-header">Tabela wyników:</h2>
+
+		<table id="results">
+			<tr>
+				<th> Prędkość [ms]:</th>
+				<td id="current">0</td>
+			</tr>
+			<tr>
+				<th> Najkrótsza prędkość [ms]:</th>
+				<td id="minR">0</td>
+			</tr>s
+						<tr>
+				<th> Najdłuższa prędkość [ms]:</th>
+				<td id="maxR">0</td>
+			</tr>
+						<tr>
+				<th> Średnia prędkość [ms]:</th>
+				<td id="average">0</td>                
+			</tr>  
+            <tr>
+				<th> Numer gry:</th>
+				<td id="gameNumber">0</td>
+			</tr>            
+
+		</table>
+	</div>    
 <script>
-    const nudy = document.querySelectorAll("#app .boring");
-	nudy.forEach(element => {
-    alert(`Nuda: ${element.innerText}`);
-    element.classList.remove('boring');
-	});
+    let gameNumber = 1;
+	let minR
+	let maxR
+	let average=0;
+	let minimumScoreValue =1;    
+	function startGame(){
+		buttonGame.innerText = 'Kliknij, gdy zmieni się kolor';
+
+		let randomDelay = (Math.floor(Math.random()*10)+1)*500;
+		setTimeout(changeColor, randomDelay);
+
+		const now = new Date();
+		const timestampInMilliseconds = now.getTime();
+
+		buttonGame.onclick = function () {
+			const now2 = new Date();
+			score = now2.getTime() - timestampInMilliseconds - randomDelay;
+			score = Math.round(score);
+            
+		if (minR > score || !minR ) {
+			if (score> minimumScoreValue){
+				minR = score;
+			}
+		}
+		
+		if (maxR < score || !maxR) {
+			maxR = score;
+		}
+		
+		average = (average * (gameNumber - 1) + score) / gameNumber;
+		document.getElementById("average").innerHTML = average;
+		
+        let table = document.getElementById('statistic');
+        document.getElementById("current").innerHTML = score.toString();
+		document.getElementById("minR").innerHTML = minR.toString();
+		document.getElementById("maxR").innerHTML = maxR.toString();	
+        document.getElementById("gameNumber").innerHTML = gameNumber;            
+
+		gameNumber++;
+
+		if(gameNumber < 6){
+			startGame();
+		}
+		else{
+			endGame();
+			gameNumber = 1;
+
+		}
+
+		}
+    }
+	function stopGame(){
+		document.getElementById("buttonGame").style.background.removeAttribute;
+		document.getElementById("buttonGame").removeAttribute('onclick');
+        document.getElementById("buttonGame").style.background = "#f3c6ab";
+		buttonGame.innerText = 'Koniec Gry';	
+		cleanValue();
+        gameNumber = 1;
+	}
+	function endGame(){
+		document.getElementById("buttonGame").style.background.removeAttribute;
+		document.getElementById("buttonGame").removeAttribute('onclick');
+		document.getElementById("buttonGame").style.background =  "#f3c6ab";
+		buttonGame.innerText = 'KoniecGry';		
+	}
+
+	function cleanValue(){        
+		document.getElementById("current").innerHTML = 0;
+		document.getElementById("minR").innerHTML = 0;
+		document.getElementById("maxR").innerHTML = 0;
+        document.getElementById("average").innerHTML = 0;    
+        document.getElementById("gameNumber").innerHTML = 0;
+	}    
+	function changeColor(){
+		var randomColor = Math.floor(Math.random()*16777215).toString(16);
+		document.getElementById("buttonGame").style.background =  "#" + randomColor;
+	}    
 </script>
 </body>
-</html> 
+</html>
