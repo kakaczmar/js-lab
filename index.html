@@ -61,6 +61,14 @@
             .blue {
             color: blue;
             }
+            
+        table {
+            background-color: green;
+        }
+        h2 {
+            color: purple;
+        }
+       
     </style>
 </head>
 <body>
@@ -76,34 +84,22 @@
 	<button id="startGame" type="button" onclick="startGame()">Start</button>
 	<button id="stopGame" type="button" onclick="stopGame()">Stop</button>
 
-	<div 
+	<div> 
 	<button id="buttonGame" type="button" GameSpace> </button>
 	</div>
 	<div>
-	<h2 id="second-header">Tabela wyników:</h2>
-
-		<table id="results">
-			<tr>
+	<h2 id="second-header">Tablica wyników:</h2>
+		<table>
 				<th> Prędkość [ms]:</th>
 				<td id="current">0</td>
-			</tr>
-			<tr>
 				<th> Najkrótsza prędkość [ms]:</th>
 				<td id="minR">0</td>
-			</tr>s
-						<tr>
 				<th> Najdłuższa prędkość [ms]:</th>
 				<td id="maxR">0</td>
-			</tr>
-						<tr>
 				<th> Średnia prędkość [ms]:</th>
 				<td id="average">0</td>                
-			</tr>  
-            <tr>
 				<th> Numer gry:</th>
 				<td id="gameNumber">0</td>
-			</tr>            
-
 		</table>
 	</div>    
 <script>
